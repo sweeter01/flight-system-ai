@@ -1,0 +1,42 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+  application:
+    name: aircrew-server
+  ai:
+    dashscope:
+      embedding:
+        options:
+          model: text-embedding-v3
+      api-key: ${QWEN_API_KEY}
+      chat:
+        options:
+          model: qwen-plus
+    vectorstore:
+      redis:
+        index-name: power-index
+        initialize-schema: true
+        prefix: power-prefix
+  config:
+    import:
+      - "nacos:aircrew-server-dev.yml?group=B_GROUP"
+      - "nacos:application-dev.yml?group=PUBLIC"
+  cloud:
+    nacos:
+      server-addr: 192.168.100.128:8848
+      username: nacos
+      password: nacos
+      discovery:
+        namespace: 9360894e-f2bc-432e-9e0b-33e3b30460e4
+        group: B_GROUP
+        service: ${spring.application.name}
+      config:
+        namespace: ${spring.cloud.nacos.discovery.namespace}   #必须要有的命名空间
+  profiles:
+    active: dev
+
+  # 开启允许bean定义覆盖
+  main:
+    allow-bean-definition-overriding: true
+

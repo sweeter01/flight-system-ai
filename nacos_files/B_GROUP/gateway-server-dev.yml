@@ -1,0 +1,23 @@
+server:
+  port: 80  # 网关服务端口号
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true #开启服务发现功能，从nacos注册中心获取服务列表（nacos->服务管理->服务列表），然后动态的创建路由，利用微服务名称进行路由
+              lower-case-service-id: true # 配置微服务名称转换为小写,此配置主要是用在注册中心为eureke的时候
+  data:
+    redis:
+      host: 192.168.100.128
+      port: 6388
+      connect-timeout: 10s
+      timeout: 15s
+  
+gateway:
+  white:
+    allow-urls:
+      - /auth-server/doLogin  # 用户登录的请求路径
+      - /free                 # 样例路径

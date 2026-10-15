@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/fly?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: 192.168.100.128
+      port: 6388
+      connect-timeout: 10s
+      timeout: 15s
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    format:
+      date: yyyy-MM-dd HH:mm:ss
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml  
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

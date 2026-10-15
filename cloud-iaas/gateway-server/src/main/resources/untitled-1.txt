@@ -1,0 +1,20 @@
+┌─────────────────────────────────────────────────────┐
+│  spring.config.import                               │
+│  "nacos:gateway-server-dev.yml?group=B_GROUP"      │
+│                                                     │
+│  相当于：快递单上的收件地址                            │
+│  "请把 gateway-server-dev.yml 这个包裹               │
+│   寄到 B_GROUP 这个部门"                             │
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  spring.cloud.nacos.config                          │
+│  namespace: 9360894e-...                            │
+│  group: B_GROUP                                    │
+│  file-extension: yml                                │
+│                                                     │
+│  相当于：物流公司的系统配置                           │
+│  "仓库在哪（server-addr）                            │
+│   用哪个分区（namespace）                            │
+│   文件格式是什么（file-extension）"                  │
+└─────────────────────────────────────────────────────┘

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springai.flightbooking.mapper.BookingMapper">
+
+        <select id="getBookingRecordsByPassengerIds" resultType="org.springai.flightbooking.vo.BookingRecordVo">
+
+       with tr as (
+       select
+         t.booking_number,
+         t.flight_id,
+         t.name,
+         t.date,
+         t.`from`,
+         t.`to`,
+         t.booking_status,
+         t.booking_class
+        from tb_record as t
+        where t.passenger_id in
+        <foreach collection="passengerIds" item="id" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+        and t.is_deleted = 0
+        )
+        select tr.*,fp.price from tr
+        left join tb_flight_price fp
+        on tr.flight_id = fp.flight_id
+        and fp.seat_type = tr.booking_class
+        and fp.status = 1
+        and fp.is_deleted = 0   ;
+
+    </select>
+</mapper>

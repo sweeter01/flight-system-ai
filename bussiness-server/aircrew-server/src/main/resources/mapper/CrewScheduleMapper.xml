@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.power.mapper.CrewScheduleMapper">
+
+    <select id="getInfoByPageMapper" resultType="com.power.vo.CrewScheduleVo">
+        select tcs.id,
+               tcs.pilot_id,
+               tcs.assistant_id,
+               tcs.flight_id,
+               tcp.name as pilot_name,
+               tca.name as assistant_name,
+               tcs.status,
+               tcs.duty_type,
+               tcs.create_time,
+               tcs.update_time
+        from tb_crew_schedule tcs
+        left join tb_crew tcp on tcs.pilot_id = tcp.id and tcp.is_deleted = 0
+        left join tb_crew tca on tcs.assistant_id = tca.id and tca.is_deleted = 0
+        <where>
+            and tcs.is_deleted = 0
+            <if test="flightId != null and flightId != ''">
+                and tcs.flight_id = #{flightId}
+            </if>
+            <if test="pilotId != null">
+                and tcs.pilot_id = #{pilotId}
+            </if>
+            <if test="assistantId != null">
+                and tcs.assistant_id = #{assistantId}
+            </if>
+            <if test="status != null">
+                and tcs.status = #{status}
+            </if>
+            <if test="dutyType != null">
+                and tcs.duty_type = #{dutyType}
+            </if>
+        </where>
+    </select>
+</mapper>

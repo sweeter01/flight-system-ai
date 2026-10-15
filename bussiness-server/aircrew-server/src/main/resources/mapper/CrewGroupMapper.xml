@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.power.mapper.CrewGroupMapper">
+
+    <select id="selectCrewGroupPage" resultType="com.power.vo.CrewGroupVo">
+        select
+            tcg.id,
+            tcg.group_code,
+            tcg.group_name,
+            tcg.status,
+            tcg.create_time,
+            tcg.update_time,
+            tc.city_name      as base_city_name,
+            tcrew.name         as leader_name
+        from tb_crew_group tcg
+        left join tb_city tc
+            on tc.id = tcg.base_city_id and tc.is_deleted = 0
+        left join tb_crew tcrew
+            on tcrew.id = tcg.leader_id and tcrew.is_deleted = 0
+        <where>
+            and tcg.is_deleted = 0
+            <if test="groupName != null and groupName != ''">
+                and tcg.group_name like concat('%', #{groupName}, '%')
+            </if>
+            <if test="groupCode != null and groupCode != ''">
+                and tcg.group_code like concat('%', #{groupCode}, '%')
+            </if>
+            <if test="status != null">
+                and tcg.status = #{status}
+            </if>
+            <if test="leaderId != null">
+                and tcg.leader_id = #{leaderId}
+            </if>
+            <if test="baseCityId != null">
+                and tcg.base_city_id = #{baseCityId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

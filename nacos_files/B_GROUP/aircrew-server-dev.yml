@@ -1,0 +1,8 @@
+server:
+  port: 9002
+
+swagger3:
+ base-package: com.power
+ name: power-L
+ title: 后台管理系统-机组人员信息管理模块接口
+ description: 实现后台管理系统的所有接口,根路径/aircrew-server

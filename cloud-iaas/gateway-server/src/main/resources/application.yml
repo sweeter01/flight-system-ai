@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: gateway-server
+  config:
+    import:
+      - "nacos:gateway-server-dev.yml?group=B_GROUP"
+  cloud:
+    nacos:
+      server-addr: 192.168.100.128:8848
+      username: nacos
+      password: nacos
+      discovery:
+        namespace: 9360894e-f2bc-432e-9e0b-33e3b30460e4
+        group: B_GROUP
+        service: ${spring.application.name}
+      config:
+        namespace: ${spring.cloud.nacos.discovery.namespace}   #必须要有的命名空间
+        group: ${spring.cloud.nacos.discovery.group} #必须要有的分组
+        prefix: ${spring.application.name} #fallback
+        file-extension: yml #fallback
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  profiles:
+    active: dev
+  data:
+    redis:
+      host: 192.168.100.128
+      port: 6388
+      connect-timeout: 10s
+      timeout: 15s
+
+  logging:
+    level:
+      root: INFO
+      com.power: DEBUG
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

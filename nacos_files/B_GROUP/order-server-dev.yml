@@ -1,0 +1,7 @@
+server:
+  port: 9003
+
+base-package: com.power
+name: power-L
+title: 后台管理系统-订单管理模块接口
+description: 实现后台管理系统的所有接口,根路径/order-server

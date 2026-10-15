@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: auth-server # 微服务名称
+  config:
+    import:
+      - "nacos:auth-server-dev.yml?group=B_GROUP"
+  cloud:
+    nacos:
+      server-addr: 192.168.100.128:8848
+      username: nacos
+      password: nacos
+      discovery:  # 配置nacos注册中心
+        namespace: 9360894e-f2bc-432e-9e0b-33e3b30460e4
+        group: B_GROUP
+        service: ${spring.application.name}
+      config: # 配置nacos配置中心
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        group: ${spring.cloud.nacos.discovery.group}
+        prefix: ${spring.application.name}
+        file-extension: yml
+        shared-configs:   # 配置共享配置文件
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  profiles: # 多环境配置
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/fly?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+#    hikari:
+#      minimum-idle: 5
+#      maximum-pool-size: 20
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      connection-timeout: 30000
+#      connection-test-query: SELECT 1
+
+  data:
+   redis:
+    host: 192.168.100.128
+    port: 6388
+    connect-timeout: 10s
+    timeout: 15s
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    format:
+      date: yyyy-MM-dd HH:mm:ss
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+server:
+  port: 9999
+
+#wx:
+#  appid: wx5af171b32a6a2c08
+#  secret: 61c462835e50301294f6c27743f07f0d
+#  url: https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code
+#  pwd: $2a$10$Q9Z7w/s59CV07YNDpjQKbegSoiqAKji8VHJvDgShU2pDUY2kjdywa
+
+#spring:
+#  datasource:   # 配置连接数据库
+#    druid:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://192.168.26.141:3306/mall?useSSL=false&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+#      username: root
+#      password: 123456
+#  redis:  # 配置redis
+#    host: 192.168.26.141
+#    port: 6380
+#    password: 123456
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher # 指定路径配置策略
+#    format: # 接收日期参数格式
+#      date: yyyy-MM-dd HH:mm:ss
+#  jackson:  # springmvc中设置响应日期格式
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8  # 设置时区
+#mybatis-plus:
+#  mapper-locations: classpath*:/mapper/**/*.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
